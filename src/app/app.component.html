@@ -1,0 +1,76 @@
+<div class="container">
+  <nav class="nav bg-primary">
+  <div class="container d-flex justify-content-center align-items-center" id="formgroupdiv">
+    <div class="input-group col-sm-3">
+      <form action="" class="search-form input-group">
+       <input class="form-control" type="text" (keyup)="searchTerm.next($event)" formControlName="search" placeholder= "Search Users" id="search"/>
+        <span class="input-group-append">
+          <div class="input-group-text bg-white"><i class="fa fa-search"></i></div>
+        </span>
+        </form>
+    </div>
+    <select class="form-control select col-sm-3" id="select">
+      <option>By Name (Ascending)</option>
+      <option>By Name (Descending)</option>
+      <option>By Rank (Ascending)</option>
+      <option>By Rank (Descending)</option>
+    </select>
+  </div>
+</nav>
+<h6>Total Search Results:</h6>
+</div>
+
+<!--Card-->
+
+<div class="container d-flex justify-content-center align-items-center" id="carddiv">
+  <div class="card col-sm-7 mt-5">
+    <div class="card-body" *ngFor="let result of paginationElements | paginate: { itemsPerPage: 3, currentPage: page }">
+      <img class="img rounded-circle float-left" id="card-avatar" src={{result.avatar_url}}>
+      <h3 class="card-title" id="card-name">{{result.login}}</h3>
+        <span class="badge text-lg-dark badge-danger">Followers {{result.followers}} </span>
+        <span class="badge text-lg-dark badge-primary">Following {{result.following}}</span>
+        <span class="badge text-lg-dark badge-success">Public gists {{result.public_gists}} </span>
+        <span class="badge text-lg-dark badge-warning">Public Repos {{result.public_repos}} </span>
+      <p class="card-text mb-0 mt-3">Works at {{result.organizations_url}}</p>
+      <p class="card-link mt-0">Based in {{result.location}}</p>
+     <button class= "btn btn-outline-primary float-right" data-toggle="collapse" data-target="#repos">Details</button>
+     <table class="table table-sm pt-4 collapse" id="repos">
+      <thead class="grey lighten-2">
+        <th>Repo Name</th>
+        <th>Languages Used</th>
+        <th>Stars|Forks|Watchers</th>
+        </thead>
+      <tr>
+      <td *ngIf="repos">{{repos[0].name}}</td>
+      <td>{{repos[0].language}}</td>
+      <td><p class="badge badge-secondary">{{repos[0].stargazers_count}} Stars</p>
+        <p class="badge badge-secondary">{{repos[0].forks_count}} Forks</p>
+        <p class="badge badge-secondary">{{repos[0].watchers_count}} Followers</p></td>
+      </tr>
+      <tr>
+        <td *ngIf="repos">{{repos[1].name}}</td>
+        <td>{{repos[1].language}}</td>
+        <td><p class="badge badge-secondary">{{repos[0].stargazers_count}} Stars</p>
+          <p class="badge badge-secondary">{{repos[0].forks_count}} Forks</p>
+          <p class="badge badge-secondary">{{repos[0].watchers_count}} Followers</p></td>
+      </tr>
+      <tr>
+        <td *ngIf="repos">{{repos[2].name}}</td>
+        <td>{{repos[2].language}}</td>
+        <td><p class="badge badge-secondary">{{repos[0].stargazers_count}} Stars</p>
+          <p class="badge badge-secondary">{{repos[0].forks_count}} Forks</p>
+          <p class="badge badge-secondary">{{repos[0].watchers_count}} Followers</p></td>
+      </tr>
+      <tr>
+        <td *ngIf="repos">{{repos[3].name}}</td>
+        <td>{{repos[3].language}}</td>
+        <td><p class="badge badge-secondary">{{repos[0].stargazers_count}} Stars</p>
+          <p class="badge badge-secondary">{{repos[0].forks_count}} Forks</p>
+          <p class="badge badge-secondary">{{repos[0].watchers_count}} Followers</p></td>
+      </tr>
+     </table>
+     <button class= "btn btn-warning float-right collapse" id="repos"><a href="{{user.html_url}}">View on Github</a></button>
+    </div>
+    </div>
+    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+  </div>
